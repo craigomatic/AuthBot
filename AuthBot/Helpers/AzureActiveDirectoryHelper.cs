@@ -50,6 +50,17 @@ namespace AuthBot.Helpers
                     $"state={extraParameters}");
                 return uri.ToString();
             }
+            else if(string.Equals(AuthSettings.Mode, "custom", StringComparison.OrdinalIgnoreCase))
+            {
+                var uri = AuthSettings.EndpointUrl + "?response_type=code" +
+                    "&client_id=" + AuthSettings.ClientId +
+                    "&client_secret=" + AuthSettings.ClientSecret +
+                    "&redirect_uri=" + HttpUtility.UrlEncode(AuthSettings.RedirectUrl) +
+                    "&scope=" + string.Join(" ", scopes) +
+                    "&state=" + extraParameters;
+
+                return uri.ToString();
+            }
             else if (string.Equals(AuthSettings.Mode, "b2c", StringComparison.OrdinalIgnoreCase))
             {
                 return null;

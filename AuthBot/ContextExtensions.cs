@@ -56,6 +56,15 @@ namespace AuthBot
                         authResult.TokenCache = tokenCache.Serialize();
                         context.StoreAuthResult(authResult);
                     }
+                    else if (string.Equals(AuthSettings.Mode, "custom", StringComparison.OrdinalIgnoreCase))
+                    {
+                        InMemoryTokenCacheMSAL tokenCache = new InMemoryTokenCacheMSAL(authResult.TokenCache);
+                        var result = await AzureActiveDirectoryHelper.GetToken(authResult.UserUniqueId, tokenCache, scopes);
+                        authResult.AccessToken = result.AccessToken;
+                        authResult.ExpiresOnUtcTicks = result.ExpiresOnUtcTicks;
+                        authResult.TokenCache = tokenCache.Serialize();
+                        context.StoreAuthResult(authResult);
+                    }
                     else if (string.Equals(AuthSettings.Mode, "b2c", StringComparison.OrdinalIgnoreCase))
                     {
                         throw new NotImplementedException();

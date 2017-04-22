@@ -88,7 +88,11 @@ namespace AuthBot.Controllers
                     else if (string.Equals(AuthSettings.Mode, "b2c", StringComparison.OrdinalIgnoreCase))
                     {
                     }
-                    
+                    else if (string.Equals(AuthSettings.Mode, "custom", StringComparison.OrdinalIgnoreCase))
+                    {
+                        //TODO: extract the token
+                    }
+
                     IStateClient sc = scope.Resolve<IStateClient>();
 
                     //IMPORTANT: DO NOT REMOVE THE MAGIC NUMBER CHECK THAT WE DO HERE. THIS IS AN ABSOLUTE SECURITY REQUIREMENT
